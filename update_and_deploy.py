@@ -22,6 +22,9 @@ import subprocess
 import shutil
 from datetime import datetime
 
+# Get the Python executable path from the current environment
+PYTHON_CMD = sys.executable
+
 def run_command(command, description):
     """Run a shell command and handle errors"""
     print(f"\n{'='*60}")
@@ -52,13 +55,13 @@ def main():
         print("\n⏭️  Skipping data collection (using existing CSV files)")
     else:
         print("\n📊 Step 1/5: Collecting data from GitHub API...")
-        if not run_command("python data_collection.py", "Fetching data from GitHub"):
+        if not run_command(f'"{PYTHON_CMD}" data_collection.py', "Fetching data from GitHub"):
             print("\n❌ Data collection failed. Exiting.")
             return False
     
     # Step 2: Generate stats.json for web
     print("\n📈 Step 2/5: Generating web statistics...")
-    if not run_command("python generate_web_stats.py", "Creating stats.json"):
+    if not run_command(f'"{PYTHON_CMD}" generate_web_stats.py', "Creating stats.json"):
         print("\n❌ Stats generation failed. Exiting.")
         return False
     
@@ -80,8 +83,8 @@ def main():
         print("ℹ️  No changes to commit. Stats are already up to date!")
         return True
     
-    # Stage changes
-    if not run_command("git add docs/stats.json web/stats.json *.csv", "Staging updated files"):
+    # Stage changes (only docs/stats.json and web/stats.json, not CSVs which are gitignored)
+    if not run_command("git add docs/stats.json web/stats.json", "Staging updated files"):
         print("\n❌ Git add failed. Exiting.")
         return False
     
