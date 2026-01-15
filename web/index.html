@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Team Wrapped 2025</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="progress-bar">
+        <div id="progress-fill"></div>
+    </div>
+    
+    <div id="slides-container">
+        <!-- Slide 0: Intro -->
+        <div class="slide active" data-slide="0">
+            <div class="content">
+                <h1 class="title fade-in">GitHub Team Wrapped</h1>
+                <h2 class="subtitle fade-in-delay">2025</h2>
+                <button id="start-btn" class="cta-button">Let's Go! 🚀</button>
+            </div>
+        </div>
+
+        <!-- Slide 1: Team Overview -->
+        <div class="slide" data-slide="1">
+            <div class="content">
+                <h2 class="slide-title">Your Team</h2>
+                <div class="stat-big" id="team-size">8 Developers</div>
+                <p class="stat-description">worked together across</p>
+                <div class="stat-medium" id="repo-count">2 Repositories</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Pull Requests -->
+        <div class="slide" data-slide="2">
+            <div class="content">
+                <h2 class="slide-title">Pull Requests</h2>
+                <div class="stat-big" id="total-prs">0</div>
+                <p class="stat-description">pull requests merged</p>
+                <div class="stat-small">That's collaboration! 🤝</div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Top Contributor -->
+        <div class="slide" data-slide="3">
+            <div class="content">
+                <h2 class="slide-title">MVP Developer 🏆</h2>
+                <div class="stat-big" id="top-contributor">Loading...</div>
+                <p class="stat-description">with</p>
+                <div class="stat-medium" id="top-contributor-prs">0 PRs</div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Code Changes -->
+        <div class="slide" data-slide="4">
+            <div class="content">
+                <h2 class="slide-title">Lines of Code</h2>
+                <div class="stat-container">
+                    <div class="stat-item">
+                        <div class="stat-big green" id="total-additions">0</div>
+                        <p class="stat-label">Lines Added ➕</p>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-big red" id="total-deletions">0</div>
+                        <p class="stat-label">Lines Deleted ➖</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Commits -->
+        <div class="slide" data-slide="5">
+            <div class="content">
+                <h2 class="slide-title">Total Commits</h2>
+                <div class="stat-big" id="total-commits">0</div>
+                <p class="stat-description">commits pushed to production</p>
+                <div class="stat-small">Keep coding! 💻</div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Comments & Collaboration -->
+        <div class="slide" data-slide="6">
+            <div class="content">
+                <h2 class="slide-title">Code Reviews</h2>
+                <div class="stat-big" id="total-comments">0</div>
+                <p class="stat-description">review comments</p>
+                <div class="stat-small">Teamwork makes the dream work! 💬</div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Busiest Month -->
+        <div class="slide" data-slide="7">
+            <div class="content">
+                <h2 class="slide-title">Busiest Month 🔥</h2>
+                <div class="stat-big" id="busiest-month">Loading...</div>
+                <p class="stat-description">with</p>
+                <div class="stat-medium" id="busiest-month-prs">0 PRs</div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Most Active Repo -->
+        <div class="slide" data-slide="8">
+            <div class="content">
+                <h2 class="slide-title">Hottest Repo 🌟</h2>
+                <div class="stat-big" id="most-active-repo">Loading...</div>
+                <p class="stat-description">with</p>
+                <div class="stat-medium" id="most-active-repo-prs">0 PRs</div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Final Summary -->
+        <div class="slide" data-slide="9">
+            <div class="content">
+                <h2 class="slide-title">2025 in Review</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-number" id="summary-prs">0</div>
+                        <div class="summary-label">Pull Requests</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-number" id="summary-commits">0</div>
+                        <div class="summary-label">Commits</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-number" id="summary-comments">0</div>
+                        <div class="summary-label">Comments</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-number" id="summary-changes">0</div>
+                        <div class="summary-label">Lines Changed</div>
+                    </div>
+                </div>
+                <div class="final-message">Here's to an even better 2026! 🎉</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="navigation">
+        <button id="prev-btn" class="nav-btn" disabled>←</button>
+        <span id="slide-counter">1 / 10</span>
+        <button id="next-btn" class="nav-btn">→</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
