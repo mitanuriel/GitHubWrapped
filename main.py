@@ -13,14 +13,14 @@ def main():
     # Step 1: Collect data from GitHub API
     print("STEP 1: Collecting data from GitHub API")
     print("-"*60)
-    relevant_repos, relevant_prs, relevant_prs_comments, relevant_prs_commits, commits_stats = collect_github_data()
+    relevant_repos, relevant_prs, relevant_prs_comments, relevant_prs_commits, commits_stats, workflow_runs = collect_github_data()
     
     # Step 2: Create and save dataframes
     print("\nSTEP 2: Creating dataframes")
     print("-"*60)
-    repos_df, prs_df, comments_df, commits_df, commits_stats_df = create_dataframes(
+    repos_df, prs_df, comments_df, commits_df, commits_stats_df, workflow_runs_df = create_dataframes(
         relevant_repos, relevant_prs, relevant_prs_comments, 
-        relevant_prs_commits, commits_stats
+        relevant_prs_commits, commits_stats, workflow_runs
     )
     
     # Step 3: Calculate aggregations and display results

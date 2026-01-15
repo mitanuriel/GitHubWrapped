@@ -1,7 +1,7 @@
 // GitHub Team Wrapped - Main Script
 let currentSlide = 0;
 let stats = null;
-const totalSlides = 10;
+const totalSlides = 11;
 
 // Load stats from JSON file
 async function loadStats() {
@@ -26,7 +26,10 @@ async function loadStats() {
       busiest_month: "December",
       busiest_month_prs: 20,
       most_active_repo: "tracking",
-      most_active_repo_prs: 30
+      most_active_repo_prs: 30,
+      total_workflow_runs: 50,
+      successful_workflow_runs: 45,
+      failed_workflow_runs: 5
     };
     return stats;
   }
@@ -99,25 +102,30 @@ function populateSlideData(slideIndex) {
     case 6: // Comments
       animateNumber('total-comments', stats.total_comments, '');
       break;
-    case 7: // Busiest Month
+    case 7: // GitHub Actions Workflows
+      animateNumber('total-workflows', stats.total_workflow_runs, '');
+      animateNumber('successful-workflows', stats.successful_workflow_runs, '');
+      animateNumber('failed-workflows', stats.failed_workflow_runs, '');
+      break;
+    case 8: // Busiest Month
       const monthElement = document.getElementById('busiest-month');
       if (monthElement) {
         monthElement.textContent = stats.busiest_month;
       }
       animateNumber('busiest-month-prs', stats.busiest_month_prs, ' PRs');
       break;
-    case 8: // Most Active Repo
+    case 9: // Most Active Repo
       const repoElement = document.getElementById('most-active-repo');
       if (repoElement) {
         repoElement.textContent = stats.most_active_repo;
       }
       animateNumber('most-active-repo-prs', stats.most_active_repo_prs, ' PRs');
       break;
-    case 9: // Summary
+    case 10: // Summary
       animateNumber('summary-prs', stats.total_prs, '');
       animateNumber('summary-commits', stats.total_commits, '');
       animateNumber('summary-comments', stats.total_comments, '');
-      animateNumber('summary-changes', stats.total_additions + stats.total_deletions, '');
+      animateNumber('summary-workflows', stats.total_workflow_runs, '');
       break;
   }
 }

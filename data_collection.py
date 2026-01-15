@@ -11,7 +11,9 @@ from github_api_helpers import (
     fetch_comments_url,
     filter_prs_by_date,
     filter_prs_by_collaboarators,
-    get_commit_details
+    get_commit_details,
+    fetch_workflow_runs,
+    fetch_workflows
 )
 
 
@@ -27,6 +29,7 @@ def collect_github_data():
     relevant_prs_comments = []
     relevant_prs_commits = []
     commits_stats = []
+    workflow_runs = []
     
     t = tqdm(org_repos, leave=True, bar_format="{desc} {n_fmt}/{total_fmt}")
 
@@ -52,6 +55,13 @@ def collect_github_data():
                 relevant_prs_comments.extend(pull_comments)
                 relevant_prs_comments.extend(issue_comments)
                 relevant_prs_commits.extend(commits)
+            
+            # Fetch workflow runs for this repo
+            try:
+                runs = fetch_workflow_runs(repo["full_name"])
+                workflow_runs.extend(runs)
+            except Exception as e:
+                print(f"\nNote: Could not fetch workflows for {repo['full_name']}: {e}")
             
             if len(prs) > 0:
                 time.sleep(30)
@@ -82,11 +92,11 @@ def collect_github_data():
         except Exception as e:
             print(f"Error collecting stats for commit {sha}: {e}")
 
-    return relevant_repos, relevant_prs, relevant_prs_comments, relevant_prs_commits, commits_stats
+    return relevant_repos, relevant_prs, relevant_prs_comments, relevant_prs_commits, commits_stats, workflow_runs
 
 
 def create_dataframes(relevant_repos, relevant_prs, relevant_prs_comments, 
-                      relevant_prs_commits, commits_stats):
+                      relevant_prs_commits, commits_stats, workflow_runs):
     """Create and save pandas dataframes from collected data."""
     print("\nCreating dataframes...")
     
@@ -125,17 +135,25 @@ def create_dataframes(relevant_repos, relevant_prs, relevant_prs_comments,
     commits_stats_df.to_csv("commits_stats.csv", index=False)
     print("✓ Saved commits_stats.csv")
 
-    return repos_df, prs_df, comments_df, commits_df, commits_stats_df
+    # Workflow runs dataframe
+    workflow_runs_df = pd.DataFrame.from_dict(workflow_runs)
+    if not workflow_runs_df.empty:
+        workflow_runs_df["created_at"] = pd.to_datetime(workflow_runs_df["created_at"], utc=True)
+        workflow_runs_df["repo_name"] = workflow_runs_df["repository"].apply(lambda d: d.get("full_name") if d else None)
+    workflow_runs_df.to_csv("workflow_runs.csv", index=False)
+    print("✓ Saved workflow_runs.csv")
+
+    return repos_df, prs_df, comments_df, commits_df, commits_stats_df, workflow_runs_df
 
 
 if __name__ == "__main__":
     # Collect data
-    relevant_repos, relevant_prs, relevant_prs_comments, relevant_prs_commits, commits_stats = collect_github_data()
+    relevant_repos, relevant_prs, relevant_prs_comments, relevant_prs_commits, commits_stats, workflow_runs = collect_github_data()
     
     # Create dataframes
-    repos_df, prs_df, comments_df, commits_df, commits_stats_df = create_dataframes(
+    repos_df, prs_df, comments_df, commits_df, commits_stats_df, workflow_runs_df = create_dataframes(
         relevant_repos, relevant_prs, relevant_prs_comments, 
-        relevant_prs_commits, commits_stats
+        relevant_prs_commits, commits_stats, workflow_runs
     )
     
     print("\n✅ Data collection complete!")

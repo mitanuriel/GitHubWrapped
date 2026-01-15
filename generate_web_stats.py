@@ -19,6 +19,15 @@ def generate_stats_json():
         comments_df = pd.read_csv("relevant_prs_comments.csv")
         commits_df = pd.read_csv("relevant_prs_commits.csv")
         commits_stats_df = pd.read_csv("commits_stats.csv")
+        
+        # Load workflow runs (may not exist in older data)
+        try:
+            workflow_runs_df = pd.read_csv("workflow_runs.csv")
+            if not workflow_runs_df.empty:
+                workflow_runs_df["created_at"] = pd.to_datetime(workflow_runs_df["created_at"], utc=True)
+        except FileNotFoundError:
+            workflow_runs_df = pd.DataFrame()
+            print("Note: workflow_runs.csv not found. Skipping workflow stats.")
     except FileNotFoundError as e:
         print(f"Error: CSV files not found. Please run data collection first.")
         print(f"Missing file: {e}")
@@ -30,6 +39,11 @@ def generate_stats_json():
     total_comments = len(comments_df)
     total_additions = int(commits_stats_df["additions"].sum()) if not commits_stats_df.empty else 0
     total_deletions = int(commits_stats_df["deletions"].sum()) if not commits_stats_df.empty else 0
+    
+    # Workflow stats
+    total_workflow_runs = len(workflow_runs_df)
+    successful_runs = len(workflow_runs_df[workflow_runs_df["conclusion"] == "success"]) if not workflow_runs_df.empty else 0
+    failed_runs = len(workflow_runs_df[workflow_runs_df["conclusion"] == "failure"]) if not workflow_runs_df.empty else 0
     
     # Top contributor
     if not prs_df.empty:
@@ -73,7 +87,10 @@ def generate_stats_json():
         "busiest_month": busiest_month,
         "busiest_month_prs": busiest_month_prs,
         "most_active_repo": most_active_repo,
-        "most_active_repo_prs": most_active_repo_prs
+        "most_active_repo_prs": most_active_repo_prs,
+        "total_workflow_runs": total_workflow_runs,
+        "successful_workflow_runs": successful_runs,
+        "failed_workflow_runs": failed_runs
     }
     
     # Write to JSON file in web directory
@@ -89,6 +106,7 @@ def generate_stats_json():
     print(f"  Code Changes: +{web_stats['total_additions']:,} -{web_stats['total_deletions']:,}")
     print(f"  Busiest Month: {web_stats['busiest_month']} ({web_stats['busiest_month_prs']} PRs)")
     print(f"  Most Active Repo: {web_stats['most_active_repo']} ({web_stats['most_active_repo_prs']} PRs)")
+    print(f"  Workflow Runs: {web_stats['total_workflow_runs']} total ({web_stats['successful_workflow_runs']} successful, {web_stats['failed_workflow_runs']} failed)")
     
     return web_stats
 

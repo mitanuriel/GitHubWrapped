@@ -93,3 +93,40 @@ def get_gh_repo_commit_stats(repo):
         stats = response.json()
         time.sleep(1)
     return stats
+
+
+def fetch_workflow_runs(repo):
+    """Fetch workflow runs for a repository."""
+    url = f"https://api.github.com/repos/{repo}/actions/runs"
+    params = {"per_page": 100}
+    runs = []
+    while url:
+        response = requests.get(url, headers=HEADERS, params=params)
+        response.raise_for_status()
+        response_data = response.json()
+        workflow_runs = response_data.get("workflow_runs", [])
+        
+        # Filter by date
+        for run in workflow_runs:
+            if run["created_at"] >= SINCE_DATE:
+                runs.append(run)
+            else:
+                # Stop pagination if we've gone past our date range
+                return runs
+        
+        url = response.links.get("next", {}).get("url")
+    return runs
+
+
+def fetch_workflows(repo):
+    """Fetch all workflows for a repository."""
+    url = f"https://api.github.com/repos/{repo}/actions/workflows"
+    params = {"per_page": 100}
+    workflows = []
+    while url:
+        response = requests.get(url, headers=HEADERS, params=params)
+        response.raise_for_status()
+        response_data = response.json()
+        workflows.extend(response_data.get("workflows", []))
+        url = response.links.get("next", {}).get("url")
+    return workflows
