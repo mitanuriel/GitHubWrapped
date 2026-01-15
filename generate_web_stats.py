@@ -45,15 +45,6 @@ def generate_stats_json():
     successful_runs = len(workflow_runs_df[workflow_runs_df["conclusion"] == "success"]) if not workflow_runs_df.empty else 0
     failed_runs = len(workflow_runs_df[workflow_runs_df["conclusion"] == "failure"]) if not workflow_runs_df.empty else 0
     
-    # Top contributor
-    if not prs_df.empty:
-        top_pr_opener = prs_df["user_login"].value_counts().head(1)
-        top_contributor = top_pr_opener.index[0]
-        top_contributor_prs = int(top_pr_opener.values[0])
-    else:
-        top_contributor = "N/A"
-        top_contributor_prs = 0
-    
     # Busiest month
     if not prs_df.empty:
         prs_df["created_month_name"] = prs_df["created_at"].dt.month_name()
@@ -78,8 +69,6 @@ def generate_stats_json():
         "team_size": len(TEAM_MEMBERS),
         "repo_count": len(repos_df),
         "total_prs": total_prs,
-        "top_contributor": top_contributor,
-        "top_contributor_prs": top_contributor_prs,
         "total_additions": total_additions,
         "total_deletions": total_deletions,
         "total_commits": total_commits,
@@ -100,7 +89,6 @@ def generate_stats_json():
     print("✓ Generated web/stats.json")
     print(f"\nStats Summary:")
     print(f"  Total PRs: {web_stats['total_prs']}")
-    print(f"  Top Contributor: {web_stats['top_contributor']} ({web_stats['top_contributor_prs']} PRs)")
     print(f"  Total Commits: {web_stats['total_commits']}")
     print(f"  Total Comments: {web_stats['total_comments']}")
     print(f"  Code Changes: +{web_stats['total_additions']:,} -{web_stats['total_deletions']:,}")

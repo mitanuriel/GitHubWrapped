@@ -1,7 +1,7 @@
 // GitHub Team Wrapped - Main Script
 let currentSlide = 0;
 let stats = null;
-const totalSlides = 11;
+const totalSlides = 10;
 
 // Load stats from JSON file
 async function loadStats() {
@@ -85,43 +85,36 @@ function populateSlideData(slideIndex) {
     case 2: // Pull Requests
       animateNumber('total-prs', stats.total_prs, '');
       break;
-    case 3: // Top Contributor
-      const topContribElement = document.getElementById('top-contributor');
-      if (topContribElement) {
-        topContribElement.textContent = stats.top_contributor;
-      }
-      animateNumber('top-contributor-prs', stats.top_contributor_prs, ' PRs');
-      break;
-    case 4: // Code Changes
+    case 3: // Code Changes
       animateNumber('total-additions', stats.total_additions, '');
       animateNumber('total-deletions', stats.total_deletions, '');
       break;
-    case 5: // Commits
+    case 4: // Commits
       animateNumber('total-commits', stats.total_commits, '');
       break;
-    case 6: // Comments
+    case 5: // Comments
       animateNumber('total-comments', stats.total_comments, '');
       break;
-    case 7: // GitHub Actions Workflows
+    case 6: // GitHub Actions Workflows
       animateNumber('total-workflows', stats.total_workflow_runs, '');
       animateNumber('successful-workflows', stats.successful_workflow_runs, '');
       animateNumber('failed-workflows', stats.failed_workflow_runs, '');
       break;
-    case 8: // Busiest Month
+    case 7: // Busiest Month
       const monthElement = document.getElementById('busiest-month');
       if (monthElement) {
         monthElement.textContent = stats.busiest_month;
       }
       animateNumber('busiest-month-prs', stats.busiest_month_prs, ' PRs');
       break;
-    case 9: // Most Active Repo
+    case 8: // Most Active Repo
       const repoElement = document.getElementById('most-active-repo');
       if (repoElement) {
         repoElement.textContent = stats.most_active_repo;
       }
       animateNumber('most-active-repo-prs', stats.most_active_repo_prs, ' PRs');
       break;
-    case 10: // Summary
+    case 9: // Summary
       animateNumber('summary-prs', stats.total_prs, '');
       animateNumber('summary-commits', stats.total_commits, '');
       animateNumber('summary-comments', stats.total_comments, '');
