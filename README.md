@@ -2,6 +2,8 @@
 
 A Python tool to generate a "Spotify Wrapped"-style summary of your team's GitHub activity for the year with an interactive web dashboard.
 
+**🌐 [View Live Demo](https://mitanuriel.github.io/GitHubWrapped/)**
+
 ## Features
 
 - 📊 Interactive animated web presentation
