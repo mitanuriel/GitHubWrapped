@@ -12,7 +12,7 @@
   "busiest_month_prs": 20,
   "most_active_repo": "tracking",
   "most_active_repo_prs": 30,
-  "total_workflow_runs": 0,
-  "successful_workflow_runs": 0,
-  "failed_workflow_runs": 0
+  "total_workflow_runs": 126,
+  "successful_workflow_runs": 94,
+  "failed_workflow_runs": 30
 }
