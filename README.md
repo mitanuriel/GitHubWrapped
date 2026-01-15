@@ -36,13 +36,34 @@ GITHUB_TOKEN=your_github_token_here
 
 ## Usage
 
-### Collect data and view results:
+### Quick Deploy (Recommended)
+
+Update stats and deploy to GitHub Pages in one command:
+
+```bash
+python update_and_deploy.py
+```
+
+This will automatically:
+- Collect fresh data from GitHub API
+- Generate updated statistics
+- Deploy to your live site at https://mitanuriel.github.io/GitHubWrapped/
+
+**Options:**
+- `--skip-collection` - Skip data collection, use existing CSV files
+- `--no-push` - Preview changes without deploying
+
+### Manual Workflow
+
+Alternatively, run steps individually:
+
+#### 1. Collect data and view console results:
 
 ```bash
 python main.py
 ```
 
-### Generate and open web dashboard:
+#### 2. Generate and open web dashboard locally:
 
 ```bash
 python generate_web_stats.py
