@@ -1,4 +1,4 @@
-# GitHub Team Wrapped 🎁
+# GitHub Team Wrapped 
 
 A Python tool to generate a "Spotify Wrapped"-style summary of your team's GitHub activity for the year with an interactive web dashboard.
 
